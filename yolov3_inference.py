@@ -1,21 +1,20 @@
 import sys
 import argparse
-from yolo import YOLO, detect_video
+from yolo import YOLO
 from PIL import Image
 import matplotlib.pyplot as plt
+import results
 
+def readImage(filepath):
+	image = Image.open(filepath).convert("RGB")
+	return image
 
 yolo = YOLO()
 
+path_to_input_images = 'input'
+path_to_output_images = 'output'
+path_to_output_csv = 'csv'
 
-input_path = 'input/'
-output_path = 'output/'
-filename = 'porsche.jpg'
-image = Image.open(input_path + filename).convert("RGB")
-r_image = yolo.detect_image(image)
-plt.figure()
-plt.imshow(r_image)
-plt.show()
-
+results.detect_images(yolo.detect_image, readImage, path_to_input_images, path_to_output_images, path_to_output_csv, output_PIL=True)
 
 yolo.close_session()
